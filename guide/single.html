@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Vkontakte Authentication for Spring Security 1.0-SNAPSHOT</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+        <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <script type="text/javascript">
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+    </head>
+
+    <body class="body" onload="addJsClass();">
+        <div id="navigation">
+            <ul>
+                <li>
+                    <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                        <a href="../guide/index.html" class="button">Table of contents</a>
+                        <div id="nav-summary-childs" style="display:none;">
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#usage"><strong>3</strong><span>Usage</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#configuration"><strong>4</strong><span>Configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#usingVkontakteAuthService"><strong>5</strong><span>Using VkontakteAuthService</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#commonIssues"><strong>6</strong><span>Common Issues</span></a></div>
+                            
+                        </div>
+                    </div>
+                </li>
+                <li class="separator selected">
+                    <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+                </li>
+            </ul>
+        </div>
+        <div id="header">
+            <div class="images clearfix">
+                
+                
+            </div>
+            <p>Vkontakte authentication support for the Spring Security plugin.</p>
+        </div>
+
+
+        <table id="colset" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="col1">
+                    <div id="main" class="corner-all">
+
+                        <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                        <div class="project">
+                            <h1>Vkontakte Authentication for Spring Security - Reference Documentation</h1>
+                            <p><strong>Authors:</strong> Pavel Burov</p>
+                            <p><strong>Version:</strong> 1.0-SNAPSHOT</p>
+                            
+                        </div>
+
+                        
+                        <div id="table-of-content">
+                            <h2>Table of Contents</h2>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#usage"><strong>3</strong><span>Usage</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#configuration"><strong>4</strong><span>Configuration</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#usingVkontakteAuthService"><strong>5</strong><span>Using VkontakteAuthService</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#commonIssues"><strong>6</strong><span>Common Issues</span></a></div>
+                            
+                            <div style="clear:both" ></div>
+                        </div>
+                        
+                        
+
+<h1 id="introduction">1 Introduction</h1>
+Grails plugin for Vkontakte Authentication, as extension to Grails Spring Security Core plugin.<p class="paragraph"/><h2>Requirements:</h2>
+<ul class="star">
+<li>grails 2.0+</li>
+<li>spring-security-core plugin 2.0-RC2</li>
+<li>jquery (for Open API authorization)</li>
+</ul><p class="paragraph"/><h2>Links:</h2>
+<ul class="star">
+<li><a href="https://github.com/pavelburov/grails-spring-security-vkontakte" target="blank">Sources</a></li>
+<li><a href="https://github.com/pavelburov/grails-vkontakte-authentication-example" target="blank">Example app</a></li>
+<li><a href="https://github.com/pavelburov/grails-spring-security-vkontakte/issues" target="blank">Submit a bug</a></li>
+</ul><p class="paragraph"/>
+
+
+<h1 id="installation">2 Installation</h1>
+Add dependency into <code>BuildConfig.groovy</code>:<p class="paragraph"/><div class="code"><pre>plugins &#123;
+        compile <span class="java&#45;quote">"org.grails.plugins:spring&#45;security&#45;vkontakte:1.0"</span>
+        // &#8230;
+        // you need to have spring&#45;security&#45;core plugin installed
+        // &#8230;
+    &#125;</pre></div><p class="paragraph"/>Call (optionaly) configuration wizards by:
+<div class="code"><pre>grails s2&#45;quickstart //configure Spring Security Core
+grails s2&#45;init&#45;vkontakte //configure Spring Security Vkontakte</pre></div><p class="paragraph"/>Or you can edit <code>Config.groovy</code> instead and put your Vkontakte App appId/secret and domain class configuration into <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugin.springsecurity.vkontakte.appId = ..
+grails.plugin.springsecurity.vkontakte.secret = ..
+grails.plugin.springsecurity.vkontakte.domain.className = 'com.company.VkontakteUser'</pre></div><p class="paragraph"/>It's very basic configuration, for other options (see <a href="../guide/single.html#configuration" class="guide">Configuration</a> section)<p class="paragraph"/>Follow <a href="../guide/single.html#usage" class="guide">Basic Usage</a> guide for full example.
+
+
+
+<h1 id="usage">3 Usage</h1>
+<h2>Example app</h2><p class="paragraph"/>You can take a look at <a href="https://github.com/pavelburov/grails-vkontakte-authentication-example" target="blank">Example Application</a>, it's very
+basic app, that shows how to use the plugin. Just clone it, put your Vkontakte App credentials, and play with the code.<p class="paragraph"/><h2>Usage</h2><p class="paragraph"/><h3>Setup Vkontakte credentials</h3><p class="paragraph"/>Put your Vkontakte App appId/secret into <code>Config.groovy</code>:
+<div class="code"><pre>grails.plugin.springsecurity.vkontakte.appId = ..
+grails.plugin.springsecurity.vkontakte.secret = ..</pre></div><p class="paragraph"/><h3>Create domain class for your user</h3><p class="paragraph"/>Like <code>domain/VkontakteUser.groovy</code>:<p class="paragraph"/><div class="code"><pre>class VkontakteUser &#123;
+    <span class="java&#45;object">Long</span> vkId
+    <span class="java&#45;object">String</span> accessToken
+    Date accessTokenExpires<p class="paragraph"/>    <span class="java&#45;keyword">static</span> belongsTo = &#91;user: User&#93; // connected to main Spring Security domain<p class="paragraph"/>    <span class="java&#45;keyword">static</span> constraints = &#123;
+        vkId unique: <span class="java&#45;keyword">true</span>
+    &#125;
+&#125;</pre></div><p class="paragraph"/>The plugin is configured for <code>VkontakteUser</code> class name by default. But you could use different name (or use package) for domain class,
+for example <code>com.company.UserWithVkontakte</code>, that you should configure at <code>Config.groovy</code> at this case:
+<div class="code"><pre>grails.plugin.springsecurity.vkontakte.domain.className = 'com.company.VkontakteUser'</pre></div><p class="paragraph"/><h3>Put SignIn with Vkontakte button:</h3><p class="paragraph"/>Add into your GSP:
+<div class="code"><pre>&#60;vkontakteAuth:connect /&#62;</pre></div><p class="paragraph"/><h3>Use Spring Security</h3><p class="paragraph"/>Now you could use all security tools provided by <a href="http://grails-plugins.github.io/grails-spring-security-core/docs/manual/" target="blank">Spring Security Core</a>.<p class="paragraph"/>For example, you could use taglib for checking user state:
+<div class="code"><pre>&#60;sec:ifLoggedIn&#62;
+    &#60;div class=<span class="java&#45;quote">"message"</span>&#62;Authenticated&#60;/div&#62;
+    Hello &#60;sec:username/&#62;!
+&#60;/sec:ifLoggedIn&#62;<p class="paragraph"/>&#60;sec:ifNotLoggedIn&#62;
+    &#60;div class=<span class="java&#45;quote">"message"</span>&#62;Not authenticated&#60;/div&#62;
+    &#60;vkontakteAuth:connect /&#62;
+&#60;/sec:ifNotLoggedIn&#62;</pre></div>
+
+
+
+<h1 id="configuration">4 Configuration</h1>
+<h2>Basic Configuration</h2><p class="paragraph"/><blockquote class="note">
+Make sure that you have installed and configured spring-security-core plugin before this step.
+</blockquote><p class="paragraph"/>Calling 'grails s2-init-vkontakte' will make default configuration of plugin for you, make sure that you have configuration in your <code>Config.groovy</code> like:<p class="paragraph"/><div class="code"><pre>grails.plugin.springsecurity.vkontakte.domain.className = '&#60;your VkontakteUser domain&#62;'
+grails.plugin.springsecurity.vkontakte.appId = '&#60;Vkontakte appId&#62;'
+grails.plugin.springsecurity.vkontakte.secret = '&#60;Vkontakte secret&#62;'</pre></div><p class="paragraph"/>Or you can skip 'grails s2-init-vkontakte' step, and make such configuration by yourself.<p class="paragraph"/>When you have valid configuration you can put Vkontakte Connect button in you GSP:<p class="paragraph"/><div class="code"><pre>&#60;vkontakteAuth:connect /&#62;</pre></div><p class="paragraph"/><h2>Vkontakte configuration</h2>
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Name</strong></th><th><strong class="bold">Default Value</strong></th></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.appId</td><td>must be specified</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.secret</td><td>must be specified</td></tr></table><p class="paragraph"/><h3>Permissions</h3>
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Name</strong></th><th><strong class="bold">Default Value</strong></th></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.permissions</td><td></td></tr></table><p class="paragraph"/>See: <a href="http://vk.com/dev/permissions" target="blank">Vkontakte App permissions</a><p class="paragraph"/><h2>Domain configuration</h2>
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Name</strong></th><th><strong class="bold">Default Value</strong></th></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.domain.className</td><td>VkontakteUser</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.domain.userConnectionPropertyName</td><td>user</td></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.domain.userIdPropertyName</td><td>vkId</td></tr></table><p class="paragraph"/>Where:
+<ul class="star">
+<li><code>.classname</code> - domain class name that will be used for authentication</li>
+<li><code>.connectionPropertyName</code> - name of property that connects (belongsTo) to main app user (if you have two different domains, one for app user, one for Vkontakte user)</li>
+<li><code>.userIdPropertyName</code> - name of property to hold Vkontakte user id</li>
+</ul><p class="paragraph"/><h2>Authentication configuration</h2><p class="paragraph"/><table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Name</strong></th><th><strong class="bold">Default Value</strong></th></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.autoCreate.enabled</td><td>true</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.autoCreate.roles</td><td>'ROLE_USER', 'ROLE_VKONTAKTE'</td></tr></table><p class="paragraph"/>Where:
+<ul class="star">
+<li><code>.autoCreate.enabled</code> - plugin will automatically create corresponding user for each new visitor authentication using Vkontakte</li>
+<li><code>.autoCreate.roles</code> - default list of roles that will be assigned to create user</li>
+</ul><p class="paragraph"/><h2>Filters configuration</h2><p class="paragraph"/><h3>Redirect</h3>
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Name</strong></th><th><strong class="bold">Default Value</strong></th></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.filters.redirect.processUrl</td><td>'/j_spring_security_vkontakte_check'</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.filters.redirect.position</td><td>SecurityFilterPosition.OPENID_FILTER.order + 1</td></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.filters.redirect.authenticationSuccessHandler</td><td>''</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.filters.redirect.authenticationFailureHandler</td><td>''</td></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.filters.redirect.successHandler</td><td>{}</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.filters.redirect.failureHandler</td><td>{}</td></tr></table><p class="paragraph"/>Where:
+<ul class="star">
+<li><code>.filters.redirect.processUrl</code> - url that will be used for authentication</li>
+<li><code>.filters.redirect.position</code> - filter position</li>
+<li><code>.filters.redirect.authenticationSuccessHandler</code> - bean name to use as authentication successHandler</li>
+<li><code>.filters.redirect.authenticationFailureHandler</code> - bean name to use as authentication FailureHandler</li>
+<li><code>.filters.redirect.successHandler</code> - configuration for predefined handler</li>
+<li><code>.filters.redirect.failureHandler</code> - configuration for predefined handler</li>
+</ul><p class="paragraph"/><h3>Open API</h3>
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Name</strong></th><th><strong class="bold">Default Value</strong></th></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.filters.openApi.processUrl</td><td>'/j_spring_security_vkontakte_open_api_check'</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.filters.openApi.position</td><td>SecurityFilterPosition.OPENID_FILTER.order + 2</td></tr><tr class="table-odd"><td>grails.plugin.springsecurity.vkontakte.filters.openApi.authenticationSuccessHandler</td><td>''</td></tr><tr class="table-even"><td>grails.plugin.springsecurity.vkontakte.filters.openApi.authenticationFailureHandler</td><td>''</td></tr></table><p class="paragraph"/>Where:
+<ul class="star">
+<li><code>.filters.openApi.processUrl</code> - url that will be used for authentication</li>
+<li><code>.filters.openApi.position</code> - filter position</li>
+<li><code>.filters.openApi.authenticationSuccessHandler</code> - bean name to use as authentication successHandler</li>
+<li><code>.filters.openApi.authenticationFailureHandler</code> - bean name to use as authentication FailureHandler</li>
+</ul><p class="paragraph"/>
+
+
+<h1 id="usingVkontakteAuthService">5 Using VkontakteAuthService</h1>
+<h2>How it works</h2><p class="paragraph"/>If you want to add some specific logic to default plugin behaviour, you have to create your own
+service called 'vkontakteAuthService'. Then the plugin will check for known methods of this service, and if
+they're exist - use them instead of or in additional to own method.<p class="paragraph"/>It's some kind of extending an abstract class, but you don't need to create all methods, just what you need.<p class="paragraph"/>Used objects:
+<ul class="star">
+<li><code>&#60;VkontakteUser&#62;</code> - domain class for your vkontakte user. It's your own class, can have other name, it's just a example</li>
+<li><code>&#60;Person&#62;</code> - general user, used by Spring Security. It's your own class, can have other name, it's just a example</li>
+<li><code>VkontakteAuthToken</code> - token provided by plugin (instance of <code>com.burig.grails.springsecurity.vkontakte.VkontakteAuthToken</code>)</li>
+</ul><p class="paragraph"/>VkontakteAuthToken contains:
+<ul class="star">
+<li>String code</li>
+<li>VkontakteAccessToken accessToken</li>
+<ul class="star">
+<li>Long userId</li>
+<li>String accessToken</li>
+<li>Date expireAt</li>
+</ul></ul><p class="paragraph"/>Notice that <code>&#60;VkontakteUser&#62;</code> and <code>&#60;Person&#62;</code> can be same object, or can be two different object (with a relation), depends
+on your architecture.<p class="paragraph"/><h2>Take a look at sources</h2><p class="paragraph"/>To understand how it works, and which methods you can use for customization.
+Take a look at sources of <a href="https://github.com/pavelburov/grails-spring-security-vkontakte/blob/master/src/groovy/com/burig/grails/springsecurity/vkontakte/DefaultVkontakteAuthDao.groovy" target="blank">DefaultVkontakteAuthDao</a><p class="paragraph"/><h2>List of possible methods:</h2><p class="paragraph"/><h3><code>&#60;VkontakteUser&#62;</code> findUser(VkontakteAuthToken token)</h3><p class="paragraph"/>Called when vkontakte user is authenticated (on every request), must return existing instance
+for specified token, if exits. If doesn't - return <code>null</code>.<p class="paragraph"/><h3><code>&#60;VkontakteUser&#62;</code> create(VkontakteAuthToken token)</h3><p class="paragraph"/>Called when we have a new vkontakte user, called on first login to create all required data structures.<p class="paragraph"/>Notice, that if you have such method, it replaces all other methods for user creation, like:
+<ul class="star">
+<li>createAppUser</li>
+<li>prepopulateAppUser</li>
+<li>onCreate</li>
+<li>afterCreate</li>
+<li>createRoles</li>
+</ul><p class="paragraph"/><h3><code>&#60;Person&#62;</code> createAppUser(<code>&#60;VkontakteUser&#62;</code> user, VkontakteAuthToken token)</h3><p class="paragraph"/>Called if you have configured two domains, one for main user, one for vkontakte user.<p class="paragraph"/><h3>void afterCreate(<code>&#60;VkontakteUser&#62;</code> user, VkontakteAuthToken token)</h3><p class="paragraph"/>Called after user was created by plugin, just after saving into database, but before roles are assigned to user.
+You can setup user object with some extra values. If you need to access Vkontakte API, you could use token, it
+contains 'accessToken' for current user.<p class="paragraph"/><h3>void createRoles(<code>&#60;VkontakteUser&#62;</code> user)</h3><p class="paragraph"/>Called when we have a new Vkontakte user, called on first login to create roles list for new user. If method doesn't exist,
+user will be created with default roles (configured at 'grails.plugins.springsecurity.vkontakte.autoCreate.roles')<p class="paragraph"/><h3>void updateToken(<code>&#60;VkontakteUser&#62;</code> user, VkontakteAuthToken token)</h3><p class="paragraph"/>Called on each login, you could update user details if needed.<p class="paragraph"/><h3><code>&#60;Person&#62;</code> getAppUser(<code>&#60;VkontakteUser&#62;</code> user)</h3><p class="paragraph"/>Must return object to store in security context for specified vkontakte user (can return itself)<p class="paragraph"/><h3>Object getPrincipal(<code>&#60;Person&#62;</code> person)</h3><p class="paragraph"/>Principal to use with Spring Security. It's very useful if it will be instance of <code>UserDetails</code> class.<p class="paragraph"/><h3>Collection&#60;GrantedAuthority&#62; getRoles(<code>&#60;Person&#62;</code> user)</h3><p class="paragraph"/>Must return roles list for specified vkontakte user
+
+
+
+<h1 id="commonIssues">6 Common Issues</h1>
+<h2>Enable logging</h2><p class="paragraph"/>If you have troubles with plugin, please enabled logging, so you can see what's happening:
+<div class="code"><pre>log4j = &#123;
+    debug 'com.burig'
+&#125;</pre></div><p class="paragraph"/><h2>Authentication don't work with <code>localhost</code> domain</h2><p class="paragraph"/>Make sure that you're using a real domain name for your application. Not a <code>localhost</code>, and avoid <code>.local</code> domains as well.<p class="paragraph"/>You can make a fake domain like <code>dev.myapp.com</code>, by putting into <code>/etc/hosts</code> the following line:
+<div class="code"><pre>127.0.0.1 dev.myapp.com</pre></div>
+If you already have line starting with <code>127.0.0.1</code>, just add your <code>dev.myapp.com</code> at the end of the line.<p class="paragraph"/>See more details about hosts file, and location of the file for different operation systems see: <a href="http://en.wikipedia.org/wiki/Hosts_(file)" target="blank">hosts (file)</a><p class="paragraph"/>After that, you should configure your Grails app to use this domain, by adding following line into <code>Config.groovy</code>.
+Of course, you need to use this domain only for development, so put this configuration into <code>development</code> environment config:
+<div class="code"><pre>environments &#123;
+    development &#123;
+        grails.serverURL = <span class="java&#45;quote">"http://dev.myapp.com:$&#123;<span class="java&#45;object">System</span>.getProperty('server.port', '8080')&#125;/$&#123;appName&#125;"</span>
+    &#125;
+&#125;</pre></div>
+
+
+                    </div>
+                </td>
+                <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                        
+                        <div class="menu-item"><a href="../ref/Tags/button.html">button</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/connect.html">connect</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/init.html">init</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/username.html">username</a>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+            </tr>
+        </table>
+
+        <div id="footer">
+            
+            
+        </div>
+
+
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>6 Common Issues 1.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/usage.html"><strong>3</strong><span>Usage</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>4</strong><span>Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/usingVkontakteAuthService.html"><strong>5</strong><span>Using VkontakteAuthService</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/commonIssues.html"><strong>6</strong><span>Common Issues</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>Vkontakte authentication support for the Spring Security plugin.</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/usingVkontakteAuthService.html">&lt;&lt; <strong>5</strong><span>Using VkontakteAuthService</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+
+
+                <div class="project">
+                    <h1>6 Common Issues - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Pavel Burov</p>
+
+                    <p><strong>Version:</strong> 1.0-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="commonIssues">6 Common Issues</h1>
+<h2>Enable logging</h2><p class="paragraph"/>If you have troubles with plugin, please enabled logging, so you can see what's happening:
+<div class="code"><pre>log4j = &#123;
+    debug 'com.burig'
+&#125;</pre></div><p class="paragraph"/><h2>Authentication don't work with <code>localhost</code> domain</h2><p class="paragraph"/>Make sure that you're using a real domain name for your application. Not a <code>localhost</code>, and avoid <code>.local</code> domains as well.<p class="paragraph"/>You can make a fake domain like <code>dev.myapp.com</code>, by putting into <code>/etc/hosts</code> the following line:
+<div class="code"><pre>127.0.0.1 dev.myapp.com</pre></div>
+If you already have line starting with <code>127.0.0.1</code>, just add your <code>dev.myapp.com</code> at the end of the line.<p class="paragraph"/>See more details about hosts file, and location of the file for different operation systems see: <a href="http://en.wikipedia.org/wiki/Hosts_(file)" target="blank">hosts (file)</a><p class="paragraph"/>After that, you should configure your Grails app to use this domain, by adding following line into <code>Config.groovy</code>.
+Of course, you need to use this domain only for development, so put this configuration into <code>development</code> environment config:
+<div class="code"><pre>environments &#123;
+    development &#123;
+        grails.serverURL = <span class="java&#45;quote">"http://dev.myapp.com:$&#123;<span class="java&#45;object">System</span>.getProperty('server.port', '8080')&#125;/$&#123;appName&#125;"</span>
+    &#125;
+&#125;</pre></div>
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/usingVkontakteAuthService.html">&lt;&lt; <strong>5</strong><span>Using VkontakteAuthService</span></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Tags/button.html">button</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/connect.html">connect</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/init.html">init</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/username.html">username</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>5 Using VkontakteAuthService 1.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/usage.html"><strong>3</strong><span>Usage</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>4</strong><span>Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/usingVkontakteAuthService.html"><strong>5</strong><span>Using VkontakteAuthService</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/commonIssues.html"><strong>6</strong><span>Common Issues</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>Vkontakte authentication support for the Spring Security plugin.</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/configuration.html">&lt;&lt; <strong>4</strong><span>Configuration</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/commonIssues.html"><strong>6</strong><span>Common Issues</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>5 Using VkontakteAuthService - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Pavel Burov</p>
+
+                    <p><strong>Version:</strong> 1.0-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="usingVkontakteAuthService">5 Using VkontakteAuthService</h1>
+<h2>How it works</h2><p class="paragraph"/>If you want to add some specific logic to default plugin behaviour, you have to create your own
+service called 'vkontakteAuthService'. Then the plugin will check for known methods of this service, and if
+they're exist - use them instead of or in additional to own method.<p class="paragraph"/>It's some kind of extending an abstract class, but you don't need to create all methods, just what you need.<p class="paragraph"/>Used objects:
+<ul class="star">
+<li><code>&#60;VkontakteUser&#62;</code> - domain class for your vkontakte user. It's your own class, can have other name, it's just a example</li>
+<li><code>&#60;Person&#62;</code> - general user, used by Spring Security. It's your own class, can have other name, it's just a example</li>
+<li><code>VkontakteAuthToken</code> - token provided by plugin (instance of <code>com.burig.grails.springsecurity.vkontakte.VkontakteAuthToken</code>)</li>
+</ul><p class="paragraph"/>VkontakteAuthToken contains:
+<ul class="star">
+<li>String code</li>
+<li>VkontakteAccessToken accessToken</li>
+<ul class="star">
+<li>Long userId</li>
+<li>String accessToken</li>
+<li>Date expireAt</li>
+</ul></ul><p class="paragraph"/>Notice that <code>&#60;VkontakteUser&#62;</code> and <code>&#60;Person&#62;</code> can be same object, or can be two different object (with a relation), depends
+on your architecture.<p class="paragraph"/><h2>Take a look at sources</h2><p class="paragraph"/>To understand how it works, and which methods you can use for customization.
+Take a look at sources of <a href="https://github.com/pavelburov/grails-spring-security-vkontakte/blob/master/src/groovy/com/burig/grails/springsecurity/vkontakte/DefaultVkontakteAuthDao.groovy" target="blank">DefaultVkontakteAuthDao</a><p class="paragraph"/><h2>List of possible methods:</h2><p class="paragraph"/><h3><code>&#60;VkontakteUser&#62;</code> findUser(VkontakteAuthToken token)</h3><p class="paragraph"/>Called when vkontakte user is authenticated (on every request), must return existing instance
+for specified token, if exits. If doesn't - return <code>null</code>.<p class="paragraph"/><h3><code>&#60;VkontakteUser&#62;</code> create(VkontakteAuthToken token)</h3><p class="paragraph"/>Called when we have a new vkontakte user, called on first login to create all required data structures.<p class="paragraph"/>Notice, that if you have such method, it replaces all other methods for user creation, like:
+<ul class="star">
+<li>createAppUser</li>
+<li>prepopulateAppUser</li>
+<li>onCreate</li>
+<li>afterCreate</li>
+<li>createRoles</li>
+</ul><p class="paragraph"/><h3><code>&#60;Person&#62;</code> createAppUser(<code>&#60;VkontakteUser&#62;</code> user, VkontakteAuthToken token)</h3><p class="paragraph"/>Called if you have configured two domains, one for main user, one for vkontakte user.<p class="paragraph"/><h3>void afterCreate(<code>&#60;VkontakteUser&#62;</code> user, VkontakteAuthToken token)</h3><p class="paragraph"/>Called after user was created by plugin, just after saving into database, but before roles are assigned to user.
+You can setup user object with some extra values. If you need to access Vkontakte API, you could use token, it
+contains 'accessToken' for current user.<p class="paragraph"/><h3>void createRoles(<code>&#60;VkontakteUser&#62;</code> user)</h3><p class="paragraph"/>Called when we have a new Vkontakte user, called on first login to create roles list for new user. If method doesn't exist,
+user will be created with default roles (configured at 'grails.plugins.springsecurity.vkontakte.autoCreate.roles')<p class="paragraph"/><h3>void updateToken(<code>&#60;VkontakteUser&#62;</code> user, VkontakteAuthToken token)</h3><p class="paragraph"/>Called on each login, you could update user details if needed.<p class="paragraph"/><h3><code>&#60;Person&#62;</code> getAppUser(<code>&#60;VkontakteUser&#62;</code> user)</h3><p class="paragraph"/>Must return object to store in security context for specified vkontakte user (can return itself)<p class="paragraph"/><h3>Object getPrincipal(<code>&#60;Person&#62;</code> person)</h3><p class="paragraph"/>Principal to use with Spring Security. It's very useful if it will be instance of <code>UserDetails</code> class.<p class="paragraph"/><h3>Collection&#60;GrantedAuthority&#62; getRoles(<code>&#60;Person&#62;</code> user)</h3><p class="paragraph"/>Must return roles list for specified vkontakte user
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/configuration.html">&lt;&lt; <strong>4</strong><span>Configuration</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/commonIssues.html"><strong>6</strong><span>Common Issues</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Tags/button.html">button</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/connect.html">connect</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/init.html">init</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/username.html">username</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
